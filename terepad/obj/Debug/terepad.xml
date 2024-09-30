@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+terepad
+</name>
+</assembly>
+<members>
+<member name="T:terepad.My.Resources.Resources">
+<summary>
+  Yerelleştirilmiş dizeleri aramak gibi işlemler için, türü kesin olarak belirtilmiş kaynak sınıfı.
+</summary>
+</member>
+<member name="P:terepad.My.Resources.Resources.ResourceManager">
+<summary>
+  Bu sınıf tarafından kullanılan, önbelleğe alınmış ResourceManager örneğini döndürür.
+</summary>
+</member>
+<member name="P:terepad.My.Resources.Resources.Culture">
+<summary>
+  Tümü için geçerli iş parçacığının CurrentUICulture özelliğini geçersiz kular
+  CurrentUICulture özelliğini tüm kaynak aramaları için geçersiz kılar.
+</summary>
+</member>
+<member name="P:terepad.My.Resources.Resources.Chroma_Red_2__1_">
+<summary>
+  System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+</summary>
+</member>
+<member name="P:terepad.My.Resources.Resources.minics">
+<summary>
+  System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+</summary>
+</member>
+<member name="P:terepad.My.Resources.Resources.notepad">
+<summary>
+  System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+</summary>
+</member>
+</members>
+</doc>
