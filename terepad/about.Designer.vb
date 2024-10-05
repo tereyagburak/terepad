@@ -36,6 +36,7 @@ Partial Class about
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Label1.Location = New System.Drawing.Point(91, 20)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(77, 25)
@@ -56,6 +57,7 @@ Partial Class about
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft JhengHei UI Light", 14.0!)
+        Me.Label2.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Label2.Location = New System.Drawing.Point(12, 84)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(236, 24)
@@ -66,16 +68,18 @@ Partial Class about
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Label3.Location = New System.Drawing.Point(93, 45)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(59, 13)
+        Me.Label3.Size = New System.Drawing.Size(107, 13)
         Me.Label3.TabIndex = 3
-        Me.Label3.Text = "release-1.0"
+        Me.Label3.Text = "release-1.2-WithDark"
         '
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.LinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.LinkLabel1.Location = New System.Drawing.Point(8, 138)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(51, 18)
@@ -87,6 +91,7 @@ Partial Class about
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft JhengHei Light", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Label4.Location = New System.Drawing.Point(8, 156)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(249, 17)
@@ -97,6 +102,7 @@ Partial Class about
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(297, 182)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.LinkLabel1)
@@ -109,6 +115,7 @@ Partial Class about
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "about"
+        Me.ShowIcon = False
         Me.Text = "terepad Hakkında"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

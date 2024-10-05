@@ -1,4 +1,5 @@
 ﻿Imports System.Net.Http
+Imports System.Runtime.InteropServices
 Imports Newtonsoft.Json.Linq ' JSON parsing için Newtonsoft.Json kullanıyoruz
 
 Public Class AIPrompter
@@ -18,6 +19,19 @@ Public Class AIPrompter
         Form1.metinbox.Text() = cevirilentext
 
     End Sub
+
+    'Başlık çubuğunu karanlık yapan eleman
+
+    Private Const DWMWA_USE_IMMERSIVE_DARK_MODE As Integer = 20
+    <DllImport("dwmapi.dll", PreserveSig:=True)>
+    Public Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
+    End Function
+    Private Sub EnableDarkMode(hwnd As IntPtr, enable As Boolean)
+        Dim useDarkMode As Integer = If(enable, 1, 0)
+        DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode, Marshal.SizeOf(useDarkMode))
+    End Sub
+    'endBaşlık çubuğunu karanlık yapan eleman
+    'EnableDarkMode(Me.Handle, True)
 
     Private Async Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         ' Kullanıcıdan alınan mesajı al
@@ -70,7 +84,7 @@ Public Class AIPrompter
         Clipboard.SetText(panola)
     End Sub
 
-
-
-
+    Private Sub AIPrompter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        EnableDarkMode(Me.Handle, True)
+    End Sub
 End Class
