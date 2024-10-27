@@ -41,16 +41,19 @@ Partial Class Form1
         Me.TarihVeSaatiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GörünümToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AltbarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ÜsteAlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AşağıyaAlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GizleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.YazıTipiVeBoyotunuDeğiştirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConsolasYazıTipineGeçToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AltBarıGizleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.YapışkanNotlarModuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TerepadBetaV03ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TerepadHakkındaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.metinbox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.durumL = New System.Windows.Forms.Label()
         Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
-        Me.YapışkanNotlarModuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -76,26 +79,26 @@ Partial Class Form1
         'AçToolStripMenuItem1
         '
         Me.AçToolStripMenuItem1.Name = "AçToolStripMenuItem1"
-        Me.AçToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+        Me.AçToolStripMenuItem1.Size = New System.Drawing.Size(119, 22)
         Me.AçToolStripMenuItem1.Text = "Aç"
         '
         'kaydetDosya
         '
         Me.kaydetDosya.Name = "kaydetDosya"
-        Me.kaydetDosya.Size = New System.Drawing.Size(180, 22)
+        Me.kaydetDosya.Size = New System.Drawing.Size(119, 22)
         Me.kaydetDosya.Text = "Kaydet"
         '
         'YeniToolStripMenuItem
         '
         Me.YeniToolStripMenuItem.Name = "YeniToolStripMenuItem"
-        Me.YeniToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.YeniToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
         Me.YeniToolStripMenuItem.Text = "Yeni"
         '
         'OtokayıtToolStripMenuItem
         '
         Me.OtokayıtToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AçToolStripMenuItem, Me.KapatToolStripMenuItem, Me.BuNedirToolStripMenuItem})
         Me.OtokayıtToolStripMenuItem.Name = "OtokayıtToolStripMenuItem"
-        Me.OtokayıtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OtokayıtToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
         Me.OtokayıtToolStripMenuItem.Text = "Otokayıt"
         '
         'AçToolStripMenuItem
@@ -129,7 +132,7 @@ Partial Class Form1
         'ÇıkışToolStripMenuItem
         '
         Me.ÇıkışToolStripMenuItem.Name = "ÇıkışToolStripMenuItem"
-        Me.ÇıkışToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÇıkışToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
         Me.ÇıkışToolStripMenuItem.Text = "Çıkış"
         '
         'DüzenleToolStripMenuItem
@@ -165,10 +168,35 @@ Partial Class Form1
         '
         'GörünümToolStripMenuItem
         '
-        Me.GörünümToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.YazıTipiVeBoyotunuDeğiştirToolStripMenuItem, Me.ConsolasYazıTipineGeçToolStripMenuItem, Me.AltBarıGizleToolStripMenuItem, Me.YapışkanNotlarModuToolStripMenuItem})
+        Me.GörünümToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AltbarToolStripMenuItem, Me.YazıTipiVeBoyotunuDeğiştirToolStripMenuItem, Me.ConsolasYazıTipineGeçToolStripMenuItem, Me.YapışkanNotlarModuToolStripMenuItem})
         Me.GörünümToolStripMenuItem.Name = "GörünümToolStripMenuItem"
         Me.GörünümToolStripMenuItem.Size = New System.Drawing.Size(70, 20)
         Me.GörünümToolStripMenuItem.Text = "Görünüm"
+        '
+        'AltbarToolStripMenuItem
+        '
+        Me.AltbarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ÜsteAlToolStripMenuItem, Me.AşağıyaAlToolStripMenuItem, Me.GizleToolStripMenuItem})
+        Me.AltbarToolStripMenuItem.Name = "AltbarToolStripMenuItem"
+        Me.AltbarToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
+        Me.AltbarToolStripMenuItem.Text = "Altbar"
+        '
+        'ÜsteAlToolStripMenuItem
+        '
+        Me.ÜsteAlToolStripMenuItem.Name = "ÜsteAlToolStripMenuItem"
+        Me.ÜsteAlToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÜsteAlToolStripMenuItem.Text = "Üste al"
+        '
+        'AşağıyaAlToolStripMenuItem
+        '
+        Me.AşağıyaAlToolStripMenuItem.Name = "AşağıyaAlToolStripMenuItem"
+        Me.AşağıyaAlToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AşağıyaAlToolStripMenuItem.Text = "Aşağıya al"
+        '
+        'GizleToolStripMenuItem
+        '
+        Me.GizleToolStripMenuItem.Name = "GizleToolStripMenuItem"
+        Me.GizleToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.GizleToolStripMenuItem.Text = "Gizle"
         '
         'YazıTipiVeBoyotunuDeğiştirToolStripMenuItem
         '
@@ -182,11 +210,11 @@ Partial Class Form1
         Me.ConsolasYazıTipineGeçToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
         Me.ConsolasYazıTipineGeçToolStripMenuItem.Text = "Varsayılan Consolas yazı tipine geç"
         '
-        'AltBarıGizleToolStripMenuItem
+        'YapışkanNotlarModuToolStripMenuItem
         '
-        Me.AltBarıGizleToolStripMenuItem.Name = "AltBarıGizleToolStripMenuItem"
-        Me.AltBarıGizleToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
-        Me.AltBarıGizleToolStripMenuItem.Text = "AltBar'ı gizle"
+        Me.YapışkanNotlarModuToolStripMenuItem.Name = "YapışkanNotlarModuToolStripMenuItem"
+        Me.YapışkanNotlarModuToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
+        Me.YapışkanNotlarModuToolStripMenuItem.Text = "Yapışkan Notlar Modu"
         '
         'TerepadBetaV03ToolStripMenuItem
         '
@@ -217,7 +245,7 @@ Partial Class Form1
         Me.metinbox.Multiline = True
         Me.metinbox.Name = "metinbox"
         Me.metinbox.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.metinbox.Size = New System.Drawing.Size(909, 439)
+        Me.metinbox.Size = New System.Drawing.Size(889, 439)
         Me.metinbox.TabIndex = 1
         '
         'Label1
@@ -225,7 +253,7 @@ Partial Class Form1
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label1.Location = New System.Drawing.Point(747, 440)
+        Me.Label1.Location = New System.Drawing.Point(740, 440)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(125, 15)
         Me.Label1.TabIndex = 2
@@ -237,17 +265,11 @@ Partial Class Form1
         Me.durumL.AutoSize = True
         Me.durumL.BackColor = System.Drawing.Color.Transparent
         Me.durumL.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.durumL.Location = New System.Drawing.Point(290, 440)
+        Me.durumL.Location = New System.Drawing.Point(281, 440)
         Me.durumL.Name = "durumL"
         Me.durumL.Size = New System.Drawing.Size(71, 15)
         Me.durumL.TabIndex = 3
         Me.durumL.Text = "Hey! Naber?"
-        '
-        'YapışkanNotlarModuToolStripMenuItem
-        '
-        Me.YapışkanNotlarModuToolStripMenuItem.Name = "YapışkanNotlarModuToolStripMenuItem"
-        Me.YapışkanNotlarModuToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
-        Me.YapışkanNotlarModuToolStripMenuItem.Text = "Yapışkan Notlar Modu"
         '
         'Form1
         '
@@ -255,10 +277,10 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Window
         Me.ClientSize = New System.Drawing.Size(884, 461)
-        Me.Controls.Add(Me.durumL)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.metinbox)
+        Me.Controls.Add(Me.durumL)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Controls.Add(Me.metinbox)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MainMenuStrip = Me.MenuStrip1
@@ -298,6 +320,9 @@ Partial Class Form1
     Friend WithEvents ConsolasYazıTipineGeçToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents durumL As Label
     Friend WithEvents AçToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents AltBarıGizleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents YapışkanNotlarModuToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AltbarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ÜsteAlToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AşağıyaAlToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents GizleToolStripMenuItem As ToolStripMenuItem
 End Class

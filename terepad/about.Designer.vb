@@ -29,6 +29,7 @@ Partial Class about
         Me.Label3 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,9 +72,9 @@ Partial Class about
         Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Label3.Location = New System.Drawing.Point(93, 45)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(107, 13)
+        Me.Label3.Size = New System.Drawing.Size(59, 13)
         Me.Label3.TabIndex = 3
-        Me.Label3.Text = "release-1.2-WithDark"
+        Me.Label3.Text = "release-1.4"
         '
         'LinkLabel1
         '
@@ -98,12 +99,24 @@ Partial Class about
         Me.Label4.TabIndex = 5
         Me.Label4.Text = "teremyag_ tarafından,kolaylık için yapıldı."
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI Semilight", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.Label5.ForeColor = System.Drawing.SystemColors.ButtonShadow
+        Me.Label5.Location = New System.Drawing.Point(7, 173)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(240, 20)
+        Me.Label5.TabIndex = 6
+        Me.Label5.Text = "stereo.luigi2799 tarafından iyileştirildi."
+        '
         'about
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(297, 182)
+        Me.ClientSize = New System.Drawing.Size(297, 208)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.Label3)
@@ -113,7 +126,9 @@ Partial Class about
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(313, 247)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(313, 247)
         Me.Name = "about"
         Me.ShowIcon = False
         Me.Text = "terepad Hakkında"
@@ -129,4 +144,5 @@ Partial Class about
     Friend WithEvents Label3 As Label
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
 End Class

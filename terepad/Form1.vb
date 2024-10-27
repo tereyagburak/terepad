@@ -1,6 +1,9 @@
-﻿Imports System.IO
+﻿Imports System.Threading.Timer
+Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
+Imports System.Windows.Forms
+
 
 Public Class Form1
     Dim selectedFilePath As String
@@ -116,17 +119,11 @@ Public Class Form1
     <DllImport("dwmapi.dll", PreserveSig:=True)>
     Public Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
     End Function
+
+    ' Bu fonksiyon sadece pencere çubuğunu değil her yeri karanlık yapmayla görevli.
     Private Sub EnableDarkMode(hwnd As IntPtr, enable As Boolean)
         Dim useDarkMode As Integer = If(enable, 1, 0)
         DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode, Marshal.SizeOf(useDarkMode))
-    End Sub
-    'endBaşlık çubuğunu karanlık yapan eleman
-    'EnableDarkMode(Me.Handle, True)
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        EnableDarkMode(Me.Handle, True)
-        ctrlTimer.Interval = 1000
-
-        durumL.Text = ""
 
         Me.BackColor = Color.FromArgb(40, 36, 36)
 
@@ -137,8 +134,9 @@ Public Class Form1
         durumL.BackColor = Color.FromArgb(40, 36, 36)
 
         metinbox.BackColor = Color.FromArgb(40, 36, 36)
+        metinbox.ForeColor = Color.White
 
-        ' MenuStrip'in arka plan ve yazı rengini değiştir
+        ' MenuStrip'lerin arka plan ve yazı rengini değiştir
         MenuStrip1.BackColor = Color.FromArgb(40, 36, 36)
         MenuStrip1.ForeColor = Color.White
 
@@ -148,10 +146,18 @@ Public Class Form1
             item.ForeColor = Color.White
             ChangeSubMenuColors(item)
         Next
+    End Sub    'endBaşlık çubuğunu karanlık yapan eleman
+    'EnableDarkMode(Me.Handle, True)
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ChangeSubMenuColors(ToolStripMenuItem1)
+        EnableDarkMode(Me.Handle, True)
+        ctrlTimer.Interval = 1000
+
+        durumL.Text = ""
 
 
 
-        Me.Text = "terepad 1.2"
+        Me.Text = "terepad 1.4"
 
         ' Komut satırı argümanlarını al
         Dim args() As String = Environment.GetCommandLineArgs()
@@ -173,13 +179,22 @@ Public Class Form1
         End If
     End Sub
 
+
+
+
     ' Alt menülerin de rengini değiştirmek için rekürsif fonksiyon
     Private Sub ChangeSubMenuColors(menuItem As ToolStripMenuItem)
         For Each subItem As ToolStripItem In menuItem.DropDownItems
             ' Sadece ToolStripMenuItem öğelerini işle
             If TypeOf subItem Is ToolStripMenuItem Then
-                subItem.BackColor = Color.FromArgb(40, 36, 36)
-                subItem.ForeColor = Color.White
+                If durumL.ForeColor = Color.Black Then
+                    subItem.BackColor = Color.FromArgb(245, 245, 245)
+                    subItem.ForeColor = Color.Black
+                End If
+                If durumL.ForeColor = Color.White Then
+                    subItem.BackColor = Color.FromArgb(40, 36, 36)
+                    subItem.ForeColor = Color.White
+                End If
                 ' Eğer daha fazla alt menü varsa, onları da değiştir
                 ChangeSubMenuColors(DirectCast(subItem, ToolStripMenuItem))
             End If
@@ -408,13 +423,9 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub AltBarıGizleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltBarıGizleToolStripMenuItem.Click
-        MenuStrip1.Visible = False
-        durumL.Text = "AltBar kapatıldı. AltBar'ı göstermek için F2 tuşuna basın!"
-    End Sub
-
     Dim escbasili As Boolean = False
     Private ctrlPressed As Boolean = False
+    Private shiftpress As Boolean = False
 
     Private WithEvents ctrlTimer As New Timer()
 
@@ -425,10 +436,14 @@ Public Class Form1
             durumL.Text = "F2 tuşuna basıldı! Elinizi o tuştan çekerseniz AltBar açılacak."
         End If
 
-        If e.KeyCode = Keys.Escape Then
-            Me.Text = "terepad kapatılıyor!"
-            durumL.Text = "Esc tuşuna basıldı. O tuştan elinizi çekerseniz, terepad zorla kapatılır."
-            metinbox.Text = "Dostum üzgünüm ama, terepad kapatılıyor!"
+        If e.KeyCode = Keys.Escape AndAlso e.Shift Then
+            metinbox.Text = "terepad kapatılıyor."
+            durumL.Text = "terepad kapatılıyor."
+            Me.Text = "Görüşürüz dostum! - terepad"
+
+            System.Threading.Thread.Sleep(2000)
+            alreadyPrompted = True
+            Application.Exit()
         End If
 
         If e.KeyCode = Keys.ControlKey And Not ctrlPressed Then
@@ -446,25 +461,68 @@ Public Class Form1
 
         ' Eğer Ctrl basılıysa ve O tuşuna basıldıysa
         If ctrlPressed AndAlso e.KeyCode = Keys.O Then
-            kaydetcik()
+            dosyaac()
         End If
 
     End Sub
 
 
+    ' Aha bu da açık mod!
+    Private Sub EnableLightMode(hwnd As IntPtr, enable As Boolean)
+        Dim useDarkMode As Integer = If(enable, 0, 0)
+        DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode, Marshal.SizeOf(useDarkMode))
+
+        Me.BackColor = Color.FromArgb(245, 245, 245)
+
+        Label1.ForeColor = Color.Black
+        Label1.BackColor = Color.FromArgb(245, 245, 245)
+
+        durumL.ForeColor = Color.Black
+        durumL.BackColor = Color.FromArgb(245, 245, 245)
+
+        metinbox.BackColor = Color.FromArgb(245, 245, 245)
+        metinbox.ForeColor = Color.Black
+
+        ' MenuStrip'lerin arka plan ve yazı rengini değiştir
+        MenuStrip1.BackColor = Color.FromArgb(245, 245, 245)
+        MenuStrip1.ForeColor = Color.Black
+
+        ' ToolStripMenuItem arka plan ve yazı rengini ayarlamak
+        For Each item As ToolStripMenuItem In MenuStrip1.Items
+            item.BackColor = Color.FromArgb(245, 245, 245)
+            item.ForeColor = Color.Black
+            ChangeSubMenuColors(item)
+        Next
+    End Sub
+
+    Public altbarCount = -1
+    Public lightDarkCount = -1
+
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
 
         durumL.Text = ""
+
+
 
         If e.KeyCode = Keys.F2 Then
             MenuStrip1.Visible = True
             durumL.Text = "AltBar açıldı."
         End If
 
-        If e.KeyCode = Keys.Escape Then
-            alreadyPrompted = True
-            durumL.Text = "Olamaz. terepad kapatıldı. SEN BUNU NASIL GÖRÜYON ACABA?"
-            Application.Exit()
+        If e.KeyCode = Keys.LShiftKey Then
+            shiftpress = False
+        End If
+
+        If e.KeyCode = Keys.F3 Then
+            lightDarkCount = lightDarkCount + 1
+            If lightDarkCount Mod 2 = 0 Then
+                EnableLightMode(Me.Handle, True)
+                ChangeSubMenuColors(ToolStripMenuItem1)
+            End If
+            If lightDarkCount Mod 2 = 1 Then
+                EnableDarkMode(Me.Handle, True)
+                ChangeSubMenuColors(ToolStripMenuItem1)
+            End If
         End If
 
 
@@ -474,9 +532,6 @@ Public Class Form1
             durumL.Text = ""
         End If
 
-        If e.KeyCode = Keys.O Then
-            dosyaac()
-        End If
     End Sub
 
     Private eventCounter As Integer = 0 ' Olay sayacını tutar
@@ -541,5 +596,29 @@ Public Class Form1
     Private Sub YapışkanNotlarModuToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles YapışkanNotlarModuToolStripMenuItem.Click
         yapiskannotlar()
 
+    End Sub
+
+    Private Sub GizleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GizleToolStripMenuItem.Click
+        MenuStrip1.Visible = False
+        durumL.Text = "AltBar kapatıldı. AltBar'ı göstermek için F2 tuşuna basın!"
+    End Sub
+
+    Private Sub AşağıyaAlToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AşağıyaAlToolStripMenuItem.Click
+        Me.WindowState = FormWindowState.Normal
+        Me.Width = 900
+        Me.Height = 500
+        metinbox.Location = New Point(-2, -2)
+        metinbox.Width = 889
+        metinbox.Height = 439
+        MenuStrip1.Dock = DockStyle.Bottom
+    End Sub
+
+    Private Sub ÜsteAlToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜsteAlToolStripMenuItem.Click
+        Me.WindowState = FormWindowState.Normal
+        Me.Width = 900
+        Me.Height = 500
+        metinbox.Location = New Point(-2, 22)
+        metinbox.Height = 415
+        MenuStrip1.Dock = DockStyle.Top
     End Sub
 End Class
