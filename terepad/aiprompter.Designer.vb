@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class AIPrompter
+Partial Class aiprompter
     Inherits System.Windows.Forms.Form
 
     'Form, bileşen listesini temizlemeyi bırakmayı geçersiz kılar.

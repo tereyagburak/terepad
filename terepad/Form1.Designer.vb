@@ -39,7 +39,6 @@ Partial Class Form1
         Me.AIPrompteriAçToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TümünüPanoyaKopyalaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TarihVeSaatiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GörünümToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AltbarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÜsteAlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -137,7 +136,7 @@ Partial Class Form1
         '
         'DüzenleToolStripMenuItem
         '
-        Me.DüzenleToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AIPrompteriAçToolStripMenuItem, Me.TümünüPanoyaKopyalaToolStripMenuItem, Me.TarihVeSaatiToolStripMenuItem, Me.AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem})
+        Me.DüzenleToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AIPrompteriAçToolStripMenuItem, Me.TümünüPanoyaKopyalaToolStripMenuItem, Me.TarihVeSaatiToolStripMenuItem})
         Me.DüzenleToolStripMenuItem.Name = "DüzenleToolStripMenuItem"
         Me.DüzenleToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.DüzenleToolStripMenuItem.Text = "Düzenle"
@@ -146,7 +145,7 @@ Partial Class Form1
         '
         Me.AIPrompteriAçToolStripMenuItem.Name = "AIPrompteriAçToolStripMenuItem"
         Me.AIPrompteriAçToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.AIPrompteriAçToolStripMenuItem.Text = "Çeviriciyi aç"
+        Me.AIPrompteriAçToolStripMenuItem.Text = "Çeviriciyi aç(bozuk)"
         '
         'TümünüPanoyaKopyalaToolStripMenuItem
         '
@@ -159,12 +158,6 @@ Partial Class Form1
         Me.TarihVeSaatiToolStripMenuItem.Name = "TarihVeSaatiToolStripMenuItem"
         Me.TarihVeSaatiToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.TarihVeSaatiToolStripMenuItem.Text = "Tarih ve saati işle"
-        '
-        'AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem
-        '
-        Me.AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem.Name = "AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem"
-        Me.AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem.Text = "Hesap Makinesi"
         '
         'GörünümToolStripMenuItem
         '
@@ -183,19 +176,19 @@ Partial Class Form1
         'ÜsteAlToolStripMenuItem
         '
         Me.ÜsteAlToolStripMenuItem.Name = "ÜsteAlToolStripMenuItem"
-        Me.ÜsteAlToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÜsteAlToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
         Me.ÜsteAlToolStripMenuItem.Text = "Üste al"
         '
         'AşağıyaAlToolStripMenuItem
         '
         Me.AşağıyaAlToolStripMenuItem.Name = "AşağıyaAlToolStripMenuItem"
-        Me.AşağıyaAlToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AşağıyaAlToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
         Me.AşağıyaAlToolStripMenuItem.Text = "Aşağıya al"
         '
         'GizleToolStripMenuItem
         '
         Me.GizleToolStripMenuItem.Name = "GizleToolStripMenuItem"
-        Me.GizleToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.GizleToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
         Me.GizleToolStripMenuItem.Text = "Gizle"
         '
         'YazıTipiVeBoyotunuDeğiştirToolStripMenuItem
@@ -311,7 +304,6 @@ Partial Class Form1
     Friend WithEvents TarihVeSaatiToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label1 As Label
     Friend WithEvents TerepadHakkındaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OtokayıtToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AçToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents KapatToolStripMenuItem As ToolStripMenuItem

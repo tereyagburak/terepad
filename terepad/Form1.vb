@@ -4,91 +4,24 @@ Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports System.Windows.Forms
 
-
 Public Class Form1
     Dim selectedFilePath As String
     Dim suanpath As String = ""
-    Private Sub IhaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles dosyasekme.Click
-
-    End Sub
-
     Dim zatenverdik As Boolean = False
+    Private alreadyPrompted As Boolean = False 'kapatmak için lazım
 
     Private Sub kaydetDosya_Click(sender As Object, e As EventArgs) Handles kaydetDosya.Click
-        If otokayit = False Then
-
-            If zatenverdik = False Then
-
-
-
-                Dim saveFileDialog1 As New SaveFileDialog()
-
-                ' Filtreyi ayarla (Sadece .txt dosyalarını kaydetmek için)
-                saveFileDialog1.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*"
-                saveFileDialog1.Title = "Metni Kaydet"
-
-                ' Kullanıcı 'Kaydet' butonuna tıklarsa
-                If saveFileDialog1.ShowDialog() = DialogResult.OK Then
-                    ' Dosya yolunu al
-                    Dim filePath As String = saveFileDialog1.FileName
-
-                    ' Dosyaya metni yaz
-                    Using writer As New StreamWriter(filePath)
-                        writer.Write(metinbox.Text)
-                    End Using
-
-                    zatenverdik = True
-                    suanpath = filePath
-
-
-                    Dim fileName As String = Path.GetFileName(filePath)
-
-                    ' Kaydedildiği mesajını göster
-                    Me.Text = $"terepad ({fileName})"
-                    durumL.Text = "Kaydedildi."
-                End If
-
-                If zatenverdik = True Then
-                    Using writer As New StreamWriter(suanpath)
-                        writer.Write(metinbox.Text)
-                    End Using
-                End If
-
-            End If
-
-            If otokayit = True Then
-                MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-        End If
-    End Sub
-
-    Private Sub Form1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
-        metinbox.AutoSize = True
+        kaydetcik()
     End Sub
 
     Private Sub YeniToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles YeniToolStripMenuItem.Click
-        If otokayit = False Then
-            metinbox.Clear()
-            Me.Text = "terepad - Yeni Yazı Dosyası"
-            durumL.Text = "Yeni dosya"
-            zatenverdik = False
-            suanpath = ""
-        End If
-
-        If otokayit = True Then
-            MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
+        yenidosya()
     End Sub
-
-
 
     Private Sub YazıTipiVeBoyotunuDeğiştirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles YazıTipiVeBoyotunuDeğiştirToolStripMenuItem.Click
         ' FontDialog oluştur
         Dim fontDialog As New FontDialog()
-
-        ' FontDialog'u göster ve kullanıcı bir font seçtiyse devam et
         If fontDialog.ShowDialog() = DialogResult.OK Then
-            ' TextBox'un fontunu değiştir
             metinbox.Font = fontDialog.Font
             durumL.Text = "Font değiştirildi."
         End If
@@ -99,21 +32,20 @@ Public Class Form1
     End Sub
 
     Private Sub TümünüPanoyaKopyalaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TümünüPanoyaKopyalaToolStripMenuItem.Click
-        Dim metinkomple As String = metinbox.Text()
-        Clipboard.SetText(metinkomple)
-        durumL.Text = "Bütün metin panoya kopyalandı."
+        Try
+            Dim metinkomple As String = metinbox.Text()
+            Clipboard.SetText(metinkomple)
+            durumL.Text = "Bütün metin panoya kopyalandı."
+        Catch ex As Exception
+            durumL.Text = "Ortada metin yok ki?"
+        End Try
     End Sub
 
     Private Sub KaydetToolStripMenuItem_Click(sender As Object, e As EventArgs)
         kaydetcik()
+        alreadyPrompted = True
     End Sub
 
-    Private Sub TerepadBetaV03ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TerepadBetaV03ToolStripMenuItem.Click
-
-    End Sub
-
-
-    'Başlık çubuğunu karanlık yapan eleman
 
     Private Const DWMWA_USE_IMMERSIVE_DARK_MODE As Integer = 20
     <DllImport("dwmapi.dll", PreserveSig:=True)>
@@ -122,8 +54,12 @@ Public Class Form1
 
     ' Bu fonksiyon sadece pencere çubuğunu değil her yeri karanlık yapmayla görevli.
     Private Sub EnableDarkMode(hwnd As IntPtr, enable As Boolean)
-        Dim useDarkMode As Integer = If(enable, 1, 0)
-        DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode, Marshal.SizeOf(useDarkMode))
+        Try
+            Dim useDarkMode As Integer = If(enable, 1, 0)
+            DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode, Marshal.SizeOf(useDarkMode))
+        Catch ex As Exception
+            'seradara
+        End Try
 
         Me.BackColor = Color.FromArgb(40, 36, 36)
 
@@ -146,43 +82,34 @@ Public Class Form1
             item.ForeColor = Color.White
             ChangeSubMenuColors(item)
         Next
-    End Sub    'endBaşlık çubuğunu karanlık yapan eleman
-    'EnableDarkMode(Me.Handle, True)
+    End Sub
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        alreadyPrompted = True
         ChangeSubMenuColors(ToolStripMenuItem1)
-        EnableDarkMode(Me.Handle, True)
+        Try
+            EnableDarkMode(Me.Handle, True)
+        Catch ex As Exception
+            Return
+        End Try
         ctrlTimer.Interval = 1000
-
         durumL.Text = ""
-
-
-
-        Me.Text = "terepad 1.4"
-
-        ' Komut satırı argümanlarını al
+        Me.Text = "terepad 1.5"
         Dim args() As String = Environment.GetCommandLineArgs()
-
-        ' Eğer bir dosya argümanı varsa, bu dosyayı aç
         If args.Length > 1 Then
             Dim filePath As String = args(1)
-
-            ' Dosya mevcut mu kontrol et
             If File.Exists(filePath) Then
                 Dim fileContent As String = File.ReadAllText(filePath)
                 metinbox.Text = fileContent
                 Dim fileName As String = Path.GetFileName(filePath)
                 Me.Text = $"terepad: ({fileName})"
                 zatenverdik = True
+                alreadyPrompted = True
                 suanpath = filePath
-
             End If
         End If
     End Sub
 
-
-
-
-    ' Alt menülerin de rengini değiştirmek için rekürsif fonksiyon
     Private Sub ChangeSubMenuColors(menuItem As ToolStripMenuItem)
         For Each subItem As ToolStripItem In menuItem.DropDownItems
             ' Sadece ToolStripMenuItem öğelerini işle
@@ -203,60 +130,11 @@ Public Class Form1
 
     Private Sub TarihVeSaatiToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TarihVeSaatiToolStripMenuItem.Click
         Dim cevirilentext As String = ""
-
         cevirilentext = Me.metinbox.Text & " " & DateTime.Now()
-
         Me.metinbox.Text() = cevirilentext
-
         metinbox.SelectionStart = metinbox.Text.Length
         metinbox.ScrollToCaret()
-
     End Sub
-
-    Private Sub kaydetcik()
-        If otokayit = False Then
-            If zatenverdik = False Then
-
-
-                Dim saveFileDialog1 As New SaveFileDialog()
-
-                ' Filtreyi ayarla (Sadece .txt dosyalarını kaydetmek için)
-                saveFileDialog1.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*"
-                saveFileDialog1.Title = "Metni Kaydet"
-
-                ' Kullanıcı 'Kaydet' butonuna tıklarsa
-                If saveFileDialog1.ShowDialog() = DialogResult.OK Then
-                    ' Dosya yolunu al
-                    Dim filePath As String = saveFileDialog1.FileName
-
-                    ' Dosyaya metni yaz
-                    Using writer As New StreamWriter(filePath)
-                        writer.Write(metinbox.Text)
-                    End Using
-                    zatenverdik = True
-                    suanpath = filePath
-                    Dim fileName As String = Path.GetFileName(filePath)
-
-                    ' Kaydedildiği mesajını göster
-                    durumL.Text = "Kaydedildi!"
-                End If
-            End If
-
-            If zatenverdik = True Then
-                Using writer As New StreamWriter(suanpath)
-                    writer.Write(metinbox.Text)
-                End Using
-            End If
-        End If
-
-        If otokayit = True Then
-            MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
-
-    End Sub
-
-
-    Private alreadyPrompted As Boolean = False ' Durum değişkeni
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Eğer kullanıcı daha önce bir uyarı göstermişsek çıkış yapmasına izin verelim
@@ -271,59 +149,44 @@ Public Class Form1
         Dim result As DialogResult
         Label1.Visible = False
         durumL.Text = "terepad kapatılmak üzere. Dosyayı kaydetmediyseniz değişiklikler kaybolacak."
-        result = MessageBox.Show("Çıkış yapıyorsunuz. Eğer dosyayı kaydetmediyseniz değişiklikler kaybolacaktır.", "terepad - Çıkış", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-
-
-
-
+        result = MessageBox.Show("Dosyanın son değişikliklerini kaydetmediniz. Çıkış yapmak istiyor musunuz?", "terepad - Çıkış", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         ' Kullanıcının hangi butona tıkladığını kontrol edelim
         Select Case result
             Case DialogResult.Yes
                 alreadyPrompted = True ' Uyarıyı gösterdiğimizi belirt
                 Me.Text = "Kapatılıyor!"
-                durumL.Text = "terepad kapatıldı."
-                Me.Close() ' Formu kapat
-
+                durumL.Text = "terepad kapatıldı. (Buraya hala nası bakıyon?)"
+                Application.Exit()
 
             Case DialogResult.No
                 ' Hiçbir şey yapma, form kapanmayı iptal eder (e.Cancel = True)
                 Label1.Visible = True
                 durumL.Text = ""
-
         End Select
     End Sub
 
     Private Sub metinbox_TextChanged(sender As Object, e As EventArgs) Handles metinbox.TextChanged
         karakterbelirt()
-
         If metinbox.TextLength() > 32000 Then
             durumL.Text = "Metindeki karakterler 32000 değerinden büyük. terepad yavaşlayabilir."
         End If
-
         If durumL.Text = "Metindeki karakterler 32000 değerinden büyük. terepad yavaşlayabilir." Then
             If metinbox.TextLength() < 32000 Then
-                durumL.Text = "Destan mı yazmıştınız?"
+                durumL.Text = "Beyfendi niye böyle yüksek değerler kullanıyorsunuz 🤔"
             End If
         End If
-
-
+        alreadyPrompted = False 'çok lazım olan kod
         If otokayit = True Then
+            alreadyPrompted = True
             Using writer As New StreamWriter(filePath)
                 writer.Write(metinbox.Text)
             End Using
-
         End If
     End Sub
 
     Private Sub TerepadHakkındaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TerepadHakkındaToolStripMenuItem.Click
         about.Show()
     End Sub
-
-    Private Sub AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AnlıkDolarTLHesaplamasınıMetneGeçirToolStripMenuItem.Click
-        calcu.Show()
-        calcu.Text = "Şu anda hesap makinesi yapmaya üşendiğimden boş bir forma bakıyorsun."
-    End Sub
-
 
     Dim filePath As String = ""
     Dim otokayit As Boolean = False
@@ -353,7 +216,6 @@ Public Class Form1
             zatenverdik = False
             AçToolStripMenuItem.Enabled = False
             KapatToolStripMenuItem.Enabled = True
-
         End If
     End Sub
 
@@ -369,10 +231,10 @@ Public Class Form1
         otokayit = False
         AçToolStripMenuItem.Enabled = True
         KapatToolStripMenuItem.Enabled = False
-
         Me.Text = $"terepad"
         durumL.Text = "Otokayıt kapalı."
         zatenverdik = False
+        alreadyPrompted = False
     End Sub
 
     Private Sub ConsolasYazıTipineGeçToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsolasYazıTipineGeçToolStripMenuItem.Click
@@ -390,8 +252,6 @@ Public Class Form1
         alreadyPrompted = True
         Application.Exit()
     End Sub
-
-
 
     Private Sub AçToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AçToolStripMenuItem1.Click
         If otokayit = False Then
@@ -412,12 +272,12 @@ Public Class Form1
                 metinbox.Text = File.ReadAllText(filePath)
                 suanpath = filePath
                 zatenverdik = True
+                alreadyPrompted = True
                 Dim fileName As String = Path.GetFileName(filePath)
                 Me.Text = $"terepad: ({fileName})"
                 durumL.Text = "Dosya açıldı."
             End If
         End If
-
         If otokayit = True Then
             MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
@@ -550,36 +410,6 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub dosyaac()
-        If otokayit = False Then
-            ' OpenFileDialog nesnesini oluştur
-            ' OpenFileDialog oluştur
-            Dim ofd As New OpenFileDialog()
-
-            ' .txt dosyalarını filtrele
-            ofd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-            ofd.Title = "Bir .txt dosyası seçin"
-
-            ' OpenFileDialog'u göster ve dosya seçimi yapıldıysa devam et
-            If ofd.ShowDialog() = DialogResult.OK Then
-                ' Dosya yolunu bir değişkene ata
-                Dim filePath As String = ofd.FileName
-
-                ' Dosya içeriğini bir değişkene ata
-                metinbox.Text = File.ReadAllText(filePath)
-                suanpath = filePath
-                zatenverdik = True
-                Dim fileName As String = Path.GetFileName(filePath)
-                Me.Text = $"terepad: ({fileName})"
-                durumL.Text = "Dosya açıldı."
-                ctrlTimer.Stop()
-            End If
-        End If
-
-        If otokayit = True Then
-            MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
-    End Sub
 
 
     Private Sub yapiskannotlar()
@@ -595,7 +425,6 @@ Public Class Form1
 
     Private Sub YapışkanNotlarModuToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles YapışkanNotlarModuToolStripMenuItem.Click
         yapiskannotlar()
-
     End Sub
 
     Private Sub GizleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GizleToolStripMenuItem.Click
@@ -621,4 +450,96 @@ Public Class Form1
         metinbox.Height = 415
         MenuStrip1.Dock = DockStyle.Top
     End Sub
+
+
+    Private Sub yenidosya()
+        If otokayit = False Then
+            metinbox.Clear()
+            Me.Text = "terepad - Yeni Yazı Dosyası"
+            durumL.Text = "Yeni dosya"
+            zatenverdik = False
+            suanpath = ""
+            alreadyPrompted = False
+        End If
+
+        If otokayit = True Then
+            MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub dosyaac()
+        If otokayit = False Then
+            ' OpenFileDialog nesnesini oluştur
+            ' OpenFileDialog oluştur
+            Dim ofd As New OpenFileDialog()
+
+            ' .txt dosyalarını filtrele
+            ofd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            ofd.Title = "Bir .txt dosyası seçin"
+
+            ' OpenFileDialog'u göster ve dosya seçimi yapıldıysa devam et
+            If ofd.ShowDialog() = DialogResult.OK Then
+                ' Dosya yolunu bir değişkene ata
+                Dim filePath As String = ofd.FileName
+
+                ' Dosya içeriğini bir değişkene ata
+                metinbox.Text = File.ReadAllText(filePath)
+                suanpath = filePath
+                zatenverdik = True
+                Dim fileName As String = Path.GetFileName(filePath)
+                Me.Text = $"terepad: ({fileName})"
+                durumL.Text = "Dosya açıldı."
+                alreadyPrompted = True
+                ctrlTimer.Stop()
+            End If
+        End If
+
+
+
+        If otokayit = True Then
+            MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub kaydetcik()
+        If otokayit = False Then
+            If zatenverdik = False Then
+                Dim saveFileDialog1 As New SaveFileDialog()
+
+                ' Filtreyi ayarla (Sadece .txt dosyalarını kaydetmek için)
+                saveFileDialog1.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*"
+                saveFileDialog1.Title = "Metni Kaydet"
+
+                ' Kullanıcı 'Kaydet' butonuna tıklarsa
+                If saveFileDialog1.ShowDialog() = DialogResult.OK Then
+                    ' Dosya yolunu al
+                    Dim filePath As String = saveFileDialog1.FileName
+
+                    ' Dosyaya metni yaz
+                    Using writer As New StreamWriter(filePath)
+                        writer.Write(metinbox.Text)
+                    End Using
+                    zatenverdik = True
+                    suanpath = filePath
+                    Dim fileName As String = Path.GetFileName(filePath)
+
+                    ' Kaydedildiği mesajını göster
+                    durumL.Text = "Kaydedildi!"
+                    alreadyPrompted = True
+                End If
+            End If
+
+            If zatenverdik = True Then
+                Using writer As New StreamWriter(suanpath)
+                    writer.Write(metinbox.Text)
+                    alreadyPrompted = True
+                End Using
+            End If
+        End If
+
+        If otokayit = True Then
+            MessageBox.Show("Otokayıt açıkken bunu yapamazsınız.", "terepad", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
 End Class
